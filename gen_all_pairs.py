@@ -1,6 +1,8 @@
 import os
 import shutil
 
+#将pairs文件夹中的每个子文件的fixed和moving中的图片，分别复制并重命名到统一的fixed和moving文件夹
+
 def get_fixed_paths(workspace):
     file_paths = [os.path.join(workspace, _) for _ in os.listdir(workspace)]
     fixed_paths = []
@@ -46,11 +48,11 @@ def copy_moving_images(moving_paths, new_moving_path):
 
 
 def main():
-    workspace = r'E:\MR Cardiac\pairs'
+    workspace = r'E:\training data\MR Cardiac\pairs'
     fixed_paths = get_fixed_paths(workspace)
     moving_paths = get_moving_paths(workspace)
-    new_fixed_path = r'E:\MR Cardiac\pairs\all_fixed_pairs'
-    new_moving_path = r'E:\MR Cardiac\pairs\all_moving_pairs'
+    new_fixed_path = r'E:\training data\MR Cardiac\pairs\all_fixed_pairs'
+    new_moving_path = r'E:\training data\MR Cardiac\pairs\all_moving_pairs'
     if not os.path.exists(new_fixed_path):
         os.mkdir(new_fixed_path)
     if not os.path.exists(new_moving_path):
@@ -58,7 +60,6 @@ def main():
 
     copy_fixed_images(fixed_paths, new_fixed_path)
     copy_moving_images(moving_paths, new_moving_path)
-
 
 
 if __name__ == '__main__':

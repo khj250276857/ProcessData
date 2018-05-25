@@ -3,56 +3,53 @@ import numpy as np
 from PIL import Image
 from scipy.misc import imsave
 
-def save_image_from_array(save_path, input_array):
-    for i in range(input_array.shape[0]):
-        imsave(save_path+'/{:>04}.png'.format(i+1), input_array[i])
+#以枚举的方法，将new文件夹中每个cycle的20张图片生成380个训练图像对(fixed和moving文件夹)，保存在pairs文件夹中
+
+def save_image_from_list(save_path, names_list):
+    for i in range(len(names_list)):
+        img = Image.open(names_list[i]).convert('L')
+        img.save(os.path.join(save_path, '{:>05}.png'.format(i+1)))
+
 
 def main():
-    workspace = r'E:\MR Cardiac\new\new_03'
-    save_path = r'E:\MR Cardiac\pairs\03_pairs'
-    if not os.path.exists(save_path):
-        os.mkdir(save_path)
-    save_path_x = os.path.join(save_path, 'fixed')
-    save_path_y = os.path.join(save_path, 'moving')
-    if not os.path.exists(save_path_x):
-        os.mkdir(save_path_x)
-    if not os.path.exists(save_path_y):
-        os.mkdir(save_path_y)
+    work_dir = r'E:\training data\MR Cardiac\new'
+    save_dir = r'E:\training data\MR Cardiac\pairs'
+    work_spaces = [os.path.join(work_dir, _) for _ in os.listdir(work_dir)]
+    for work_space in work_spaces:
+        print('processing {}....................'.format(work_space))
 
-    file_paths = [os.path.join(workspace, _) for _ in os.listdir(workspace)]
-    img_arrs_x = np.zeros([1, 256, 256], dtype='float32')
-    img_arrs_y = np.zeros([1, 256, 256], dtype='float32')
+        save_path = os.path.join(save_dir, '{:>02}_pairs'.format(os.path.split(work_space)[-1].split('_')[0]))
+        if not os.path.exists(save_path):
+            os.mkdir(save_path)
+        save_path_x = os.path.join(save_path, 'fixed')
+        save_path_y = os.path.join(save_path, 'moving')
+        if not os.path.exists(save_path_x):
+            os.mkdir(save_path_x)
+        if not os.path.exists(save_path_y):
+            os.mkdir(save_path_y)
 
-    for file_path in file_paths:
-        cycle_names = [os.path.join(file_path, _) for _ in os.listdir(file_path)]
-        #处理每个cycle
-        for cycle_name in cycle_names:
-            print('processing {}......'.format(cycle_name))
-            img_names = [os.path.join(cycle_name, _) for _ in os.listdir(cycle_name)]
-            img_arrs_x_temp = np.zeros([1, 256, 256])
-            img_arrs_y_temp = np.zeros([1, 256, 256])
+        file_paths = [os.path.join(work_space, _) for _ in os.listdir(work_space)]
+        img_name_x = []
+        img_name_y = []
 
-            for i in range(len(os.listdir(cycle_name))):
-                for j in range(i+1, len(os.listdir(cycle_name))):
-                    img_x = np.array(Image.open(img_names[i]))
-                    img_y = np.array(Image.open(img_names[j]))
-                    img_x = img_x.reshape(1, img_x.shape[0], img_x.shape[1])
-                    img_y = img_y.reshape(1, img_y.shape[0], img_y.shape[1])
-                    img_arrs_x_temp = np.append(img_arrs_x_temp, img_x, axis=0)
-                    img_arrs_y_temp = np.append(img_arrs_y_temp, img_y, axis=0)
-            img_arrs_x_temp = img_arrs_x_temp[1:img_arrs_x_temp.shape[0], :, :]
-            img_arrs_y_temp = img_arrs_y_temp[1:img_arrs_y_temp.shape[0], :, :]
-            img_arrs_x = np.append(img_arrs_x, img_arrs_x_temp, axis=0)
-            img_arrs_y = np.append(img_arrs_y, img_arrs_y_temp, axis=0)
-            print(img_arrs_x.shape)
+        for file_path in file_paths:
+            cycle_names = [os.path.join(file_path, _) for _ in os.listdir(file_path)]
+            #处理每个cycle
+            for cycle_name in cycle_names:
+                img_names = [os.path.join(cycle_name, _) for _ in os.listdir(cycle_name)]
+                for i in range(len(img_names)):
+                    for j in range(len(img_names)):
+                        if j == i:
+                            continue
+                        img_name_x.append(img_names[i])
+                        img_name_y.append(img_names[j])
+        print('image num: {}'.format(len(img_name_x)))
 
-    img_arrs_x = img_arrs_x[1:img_arrs_x.shape[0], :, :]
-    img_arrs_y = img_arrs_y[1:img_arrs_y.shape[0], :, :]
-    print('.........................')
-    print('saving images')
-    save_image_from_array(save_path_x, img_arrs_x)
-    save_image_from_array(save_path_y, img_arrs_y)
-    print('saving done')
+        print('.........................')
+        print('saving images')
+        save_image_from_list(save_path_x, img_name_x)
+        save_image_from_list(save_path_y, img_name_y)
+        print('saving done')
 
 
 if __name__ == '__main__':
