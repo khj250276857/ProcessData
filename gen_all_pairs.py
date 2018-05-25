@@ -31,9 +31,9 @@ def copy_fixed_images(fixed_paths, new_fixed_path):
         file_names = [os.path.join(fixed_path, _) for _ in os.listdir(fixed_path)]
         num = len(os.listdir(new_fixed_path))
         for i in range(len(file_names)):
-            file_path = file_names[i]
-            new_file_path = os.path.join(new_fixed_path, '{:>05}.png'.format(num+i+1))
-            shutil.copyfile(file_path, new_file_path)
+            file_name = file_names[i]
+            new_file_name = os.path.join(new_fixed_path, '{:>05}.png'.format(num+i+1))
+            shutil.copyfile(file_name, new_file_name)
 
 
 def copy_moving_images(moving_paths, new_moving_path):
@@ -42,9 +42,9 @@ def copy_moving_images(moving_paths, new_moving_path):
         file_names = [os.path.join(moving_path, _) for _ in os.listdir(moving_path)]
         num = len(os.listdir(new_moving_path))
         for i in range(len(file_names)):
-            file_path = file_names[i]
-            new_file_path = os.path.join(new_moving_path, '{:>05}.png'.format(num+i+1))
-            shutil.copyfile(file_path, new_file_path)
+            file_name = file_names[i]
+            new_file_name = os.path.join(new_moving_path, '{:>05}.png'.format(num+i+1))
+            shutil.copyfile(file_name, new_file_name)
 
 
 def main():
