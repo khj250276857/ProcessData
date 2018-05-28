@@ -48,11 +48,11 @@ def copy_moving_images(moving_paths, new_moving_path):
 
 
 def main():
-    workspace = r'E:\training data\MR Cardiac\pairs'
+    workspace = r'E:\training data\MR Cardiac\pairs_validate'
     fixed_paths = get_fixed_paths(workspace)
     moving_paths = get_moving_paths(workspace)
-    new_fixed_path = r'E:\training data\MR Cardiac\pairs\all_fixed_pairs'
-    new_moving_path = r'E:\training data\MR Cardiac\pairs\all_moving_pairs'
+    new_fixed_path = r'E:\training data\MR Cardiac\pairs_validate\all_fixed_pairs'
+    new_moving_path = r'E:\training data\MR Cardiac\pairs_validate\all_moving_pairs'
     if not os.path.exists(new_fixed_path):
         os.mkdir(new_fixed_path)
     if not os.path.exists(new_moving_path):
