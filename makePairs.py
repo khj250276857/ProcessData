@@ -2,6 +2,8 @@ import os
 import numpy as np
 from PIL import Image
 from scipy.misc import imsave
+from gen_all_pairs import main as new_main
+
 
 #以枚举的方法，将new文件夹中每个cycle的20张图片生成380个训练图像对(fixed和moving文件夹)，保存在pairs文件夹中
 
@@ -12,8 +14,8 @@ def save_image_from_list(save_path, names_list):
 
 
 def main():
-    work_dir = r'E:\training data\MR Cardiac\new'
-    save_dir = r'E:\training data\MR Cardiac\pairs'
+    work_dir = r'E:\training data\MR Cardiac\new_validate'
+    save_dir = r'E:\training data\MR Cardiac\pairs_validate'
     work_spaces = [os.path.join(work_dir, _) for _ in os.listdir(work_dir)]
     for work_space in work_spaces:
         print('processing {}....................'.format(work_space))
@@ -54,3 +56,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    new_main()
