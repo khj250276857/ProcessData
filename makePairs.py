@@ -14,8 +14,8 @@ def save_image_from_list(save_path, names_list):
 
 
 def main():
-    work_dir = r'E:\training data\MR Cardiac\new_validate'
-    save_dir = r'E:\training data\MR Cardiac\pairs_validate'
+    work_dir = r'E:\training data\MR Cardiac(2)\new'
+    save_dir = r'E:\training data\MR Cardiac(2)\pairs'
     work_spaces = [os.path.join(work_dir, _) for _ in os.listdir(work_dir)]
     for work_space in work_spaces:
         print('processing {}....................'.format(work_space))
