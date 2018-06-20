@@ -75,7 +75,7 @@ def gen_baseInfo(file_path):
 
 
 def get_pt_array(file_path):
-    # 将一个患者路径下的所有pt图像的像素值读取出来，返回存在一个ndarray中
+    # 将一个患者路径下的所有PET图像的像素值读取出来，返回存在一个ndarray中
     if not os.path.exists(file_path) or not os.path.isdir(file_path):
         raise ValueError('Given file_path does not exist or is not a file: ' + file_path)
     file_names = [os.path.join(file_path, _) for _ in os.listdir(file_path)]
@@ -87,7 +87,7 @@ def get_pt_array(file_path):
 
 
 def read_slopes(file_path):
-    # 将一个患者路径下的所有pt图像的slope读取出来，返回存在一个ndarray中
+    # 将一个患者路径下的所有pet图像的slope读取出来，返回存在一个ndarray中
     if not os.path.exists(file_path) or not os.path.isdir(file_path):
         raise ValueError('Given file_path does not exist or is not a file: ' + file_path)
     file_names = [os.path.join(file_path, _) for _ in os.listdir(file_path)]
