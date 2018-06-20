@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 # 按照相同子文件目录，将source中文件的每个seris形成20张图象一个cycle，保存在new文件夹中
 
 def main():
-    work_dir = r'E:\training data\MR Cardiac\source_validate(16-30)'
-    new_work_dir = r'E:\training data\MR Cardiac\new_validate'
+    work_dir = r'E:\training data\MR Cardiac(2)\source(1-30)'
+    new_work_dir = r'E:\training data\MR Cardiac(2)\new'
     work_spaces = [os.path.join(work_dir, _) for _ in os.listdir(work_dir)]
 
     for work_space in work_spaces:
