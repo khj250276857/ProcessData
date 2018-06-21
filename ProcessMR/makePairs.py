@@ -1,8 +1,6 @@
 import os
-import numpy as np
 from PIL import Image
-from scipy.misc import imsave
-from gen_all_pairs import main as new_main
+from ProcessMR.gen_all_pairs import main as new_main
 
 
 #以枚举的方法，将new文件夹中每个cycle的20张图片生成380个训练图像对(fixed和moving文件夹)，保存在pairs文件夹中
