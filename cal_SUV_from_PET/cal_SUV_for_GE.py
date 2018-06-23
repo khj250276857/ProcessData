@@ -126,29 +126,30 @@ def save_image_from_array(save_path, input_array, start_num):
 
 def main():
     workspace = r'E:\实验数据\2018_05_14_脱敏后PETCT 91例'
-    #save_path = r''    todo: add it
+    save_path = r'E:\training data\pet_ct_registration\suv'
+    if not os.path.exists(save_path):
+        os.mkdir(save_path)
     file_paths = [os.path.join(workspace, _) for _ in os.listdir(workspace)]
     # file_paths = [os.path.join(workspace, _) for _ in os.listdir(workspace) if _.startswith('PT')]
     for i in range(len(file_paths)):
         file_paths[i] = [os.path.join(file_paths[i], _) for _ in os.listdir(file_paths[i]) if _.startswith('PT')][0]
 
     image_num = 0
-    for file_path in file_paths:
-        print('processing    '+file_path)
-        baseInfo = gen_baseInfo(file_path)
-        slopes = read_slopes(file_path)
-        intercepts = read_intercepts(file_path)
-        pt_array = get_pt_array(file_path)
+    file_num = len(file_paths)
+    for j in range(file_num):
+        print('processing  {} / {} : '.format(j + 1, file_num)+file_paths[j])
+        baseInfo = gen_baseInfo(file_paths[j])
+        slopes = read_slopes(file_paths[j])
+        intercepts = read_intercepts(file_paths[j])
+        pt_array = get_pt_array(file_paths[j])
         suv_array = calSUV(pt_array, slopes, intercepts, baseInfo)
-
-
+        save_image_from_array(save_path, suv_array, image_num)
+        image_num += len(os.listdir(file_paths[j]))  # 计数已处理的图像数
 
     # image = suv_array[117, :, :]
     # plt.figure('PT_000')
     # plt.imshow(image, cmap='gray')
     # plt.show()
-
-
 
 
 if __name__ == '__main__':
