@@ -11,9 +11,9 @@ from scipy.misc import imsave
 import os
 
 def main():
-    x_dir = r'C:\Users\khj\Desktop\running data\validate\8_x.pkl'
-    y_dir = r'C:\Users\khj\Desktop\running data\validate\8_y.pkl'
-    z_dir = r'C:\Users\khj\Desktop\running data\validate\8_z.pkl'
+    x_dir = r'E:\training data\running data\validate\2_x.pkl'
+    y_dir = r'E:\training data\running data\validate\2_y.pkl'
+    z_dir = r'E:\training data\running data\validate\2_z1.pkl'
     save_path = r'E:\training data\新建文件夹'
 
     with open(x_dir, 'rb') as f:
@@ -28,9 +28,9 @@ def main():
     img_x = batch_x[:, :, 32]
     img_y = batch_y[:, :, 32]
     img_z = batch_z[:, :, 32]
-    imsave(os.path.join(save_path, '3_x.png'), img_x)
-    imsave(os.path.join(save_path, '3_y.png'), img_y)
-    imsave(os.path.join(save_path, '3_z.png'), img_z)
+    imsave(os.path.join(save_path, '2_x.png'), img_x)
+    imsave(os.path.join(save_path, '2_y.png'), img_y)
+    imsave(os.path.join(save_path, '2_z.png'), img_z)
 
     # plt.figure('img_x')
     # plt.imshow(img_x, cmap='gray')
