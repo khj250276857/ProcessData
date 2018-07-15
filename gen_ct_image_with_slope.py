@@ -30,7 +30,7 @@ def get_ct_array(file_path):
 
     for i in range(Pixel.shape[0]):
         ct_array.append(Pixel[i, :, :] * slopes[i] + intercepts[i])
-    return np.array(ct_array)
+    return np.array(ct_array, dtype='float32')
 
 
 def resize(input_array):
@@ -58,19 +58,20 @@ def main():
     worksapce = r'E:\实验数据\2018_05_14_脱敏后PETCT 91例\PT00704-5\CT'
     save_path = r'E:\training data\新建文件夹'
     ct_array = get_ct_array(worksapce)
-    # ct_array = resize(ct_array)
-    print(ct_array.max(), ct_array.min())
-    ct_array = clip(ct_array, -90, 95)
-    ct_array = normolize(ct_array).reshape(ct_array.shape[0], ct_array.shape[1], ct_array.shape[2], 1)
-    ct_array =ct_array.astype(np.uint8)
-    ct_array_equal = cv2.equalizeHist(ct_array[50])
-    print(ct_array_equal.shape)
-    print(ct_array_equal.max(), ct_array_equal.min())
+    ct_array = ct_array.transpose((1, 2, 0))
+    # ct_array = clip(ct_array, -90, 95)
+    ct_array = resize(ct_array)
+    # ct_array = normolize(ct_array).reshape(ct_array.shape[0], ct_array.shape[1], ct_array.shape[2], 1)
+    # ct_array_equal = cv2.equalizeHist(ct_array[50])
+    # print(ct_array_equal.shape)
+
     # ct_array = np.clip(ct_array, -50, 110)
     # imsave(os.path.join(save_path, '-100-500.png'), ct_array[100])
+    print(ct_array.shape)
     plt.figure()
-    plt.imshow(ct_array_equal, cmap='gray')
+    plt.imshow(ct_array[64, :, :], cmap='gray')
     plt.show()
+
 
 
 if __name__ == '__main__':
