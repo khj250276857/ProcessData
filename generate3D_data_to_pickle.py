@@ -62,9 +62,8 @@ def getCTarrayFromFile(file_path):
     # 读取文件中的CT文件夹的全部CT图像，返回三维ndarray， 例如 file_path = r'E:\实验数据\2018_05_14_脱敏后PETCT 91例\PT00704-5'
     ct_file_path = os.path.join(file_path, 'CT')
     ct_file_names = [os.path.join(ct_file_path, _) for _ in os.listdir(ct_file_path)]
-    ct_array = []
-    for ct_file_name in ct_file_names:
-        ct_array.append(pdm.read_file(ct_file_name).pixel_array)
+    ct_array = [pdm.read_file(ct_file_name).pixel_array for ct_file_name in ct_file_names]
+
     ct_array = np.array(ct_array, dtype='float32')
     ct_array = normalize(np.clip(resize(ct_array), 500, ct_array.max()))
     ct_array = ct_array.reshape(1, ct_array.shape[0], ct_array.shape[1], ct_array.shape[2], 1)
@@ -73,12 +72,11 @@ def getCTarrayFromFile(file_path):
     return ct_array
 
 
-def getPTarrayFromFile(file_path):
+def getSUVarrayFromFile(file_path):
     pt_file_path = os.path.join(file_path, 'PT')
     pt_file_names = [os.path.join(pt_file_path, _) for _ in os.listdir(pt_file_path)]
-    pt_array = []
-    for pt_file_name in pt_file_names:
-        pt_array.append(pdm.read_file(pt_file_name).pixel_array)
+    pt_array = [pdm.read_file(pt_file_name).pixel_array for pt_file_name in pt_file_names]
+
     pt_array = normalize(np.array(pt_array, dtype='float32'))
     pt_array = pt_array.reshape(1, pt_array.shape[0], pt_array.shape[1], pt_array.shape[2], 1)
     pt_array = pt_array.transpose(0, 2, 3, 1, 4)
@@ -106,7 +104,7 @@ def main():
         print('processing {}/{}:   {}'.format(i, file_num, file_paths[i]))
         print('start_num:  {}'.format(start_num))
         ct_array = getCTarrayFromFile(file_paths[i])
-        pt_array = getPTarrayFromFile(file_paths[i])
+        pt_array = getSUVarrayFromFile(file_paths[i])
         start_num += gen_3d_volume(ct_array, pt_array, patch_size_h, patch_size_w, patch_size_d, pixel_spacing, ct_save_path, pt_save_path, start_num)
 
 if __name__ == '__main__':
