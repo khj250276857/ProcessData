@@ -11,11 +11,11 @@ import os
 import cv2
 from pre_process_PET_CT import cal_suv, cal_hu
 
-# 遍历91个患者CT、PET所有图像，生成对应的3D图像块数据存在pickle文件中
+# 遍历91个患者所有CT、PET图像，生成对应的3D图像块数据存在pickle文件中
 
 def normalize(input_array):
     input_array = (input_array - np.mean(input_array)) / np.std(input_array)
-    input_array = (input_array - np.min(input_array)) / (np.max(input_array) - np.min(input_array))
+    # input_array = (input_array - np.min(input_array)) / (np.max(input_array) - np.min(input_array))
     return input_array
 
 
@@ -30,7 +30,7 @@ def resize(input_array):
 def gen_3d_volume(ct_array, suv_array, patch_size_h: int, patch_size_w: int, patch_size_d: int, pixel_spacing: int,
                   ct_save_path, pt_save_path, start_num):
     '''
-    同时对一个患者的3D pet和ct数据进行裁剪，并转置为[1,h,w,d,c],将图像块对存入对应文件夹的pickle文件中
+    同时对一个患者的3D suv和ct数据进行裁剪，并转置为[1,h,w,d,c],将图像块对存入对应文件夹的pickle文件中
     :param ct_array: 相同患者全部pet数据生成的ndarray, [1,d,h,w,c]
     :param suv_array: 相同患者全部pet数据生成的ndarray, [1,d,h,w,c]
     :param patch_size: 想要裁剪的图像块size大小
@@ -94,8 +94,8 @@ def main():
     workspace = r'E:\实验数据\2018_05_14_脱敏后PETCT 91例'
     file_paths = [os.path.join(workspace, _) for _ in os.listdir(workspace)]
 
-    ct_save_path = r'E:\training data\3D volume new(64+64)\ct volume'
-    pt_save_path = r'E:\training data\3D volume new(64+64)\pt volume'
+    ct_save_path = r'E:\training data\3D volume suv0-5(64+64)\ct volume'
+    pt_save_path = r'E:\training data\3D volume suv0-5(64+64)\pt volume'
     if not os.path.exists(ct_save_path):
         os.mkdir(ct_save_path)
     if not os.path.exists(pt_save_path):
@@ -108,7 +108,7 @@ def main():
     patch_size_d = 64
     file_num = len(file_paths)
     for i in range(file_num):
-        print('processing {}/{}:   {}'.format(i, file_num, file_paths[i]))
+        print('processing {}/{}:   {}'.format(i+1, file_num, file_paths[i]))
         print('start_num:  {}'.format(start_num))
         ct_array = cal_hu(file_paths[i])
         suv_array = cal_suv(file_paths[i])
