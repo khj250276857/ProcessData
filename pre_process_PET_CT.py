@@ -119,7 +119,7 @@ def cal_suv(case_path0, lbm=False):
         SUVbw = (ds.pixel_array * float(ds[0x0028, 0x1053].value) + float(ds[0x0028, 0x1052].value)) * SUVbwScaleFactor
         ArrayDicom[:, :, i] = SUVbw
     # ArrayDicom = normalize(ArrayDicom)
-    ArrayDicom = np.clip(ArrayDicom, 0, 5)
+    ArrayDicom = np.clip(resize(ArrayDicom), 0, 5)
     ArrayDicom = ArrayDicom.reshape(1, ArrayDicom.shape[0], ArrayDicom.shape[1], ArrayDicom.shape[2], 1)
 
     return ArrayDicom
@@ -201,7 +201,7 @@ def cal_pt(path):
 def resize(input_array):
     output_array = []
     for i in range(input_array.shape[2]):
-        output_array.append(cv2.resize(input_array[:, :, i], (128, 128), interpolation=cv2.INTER_CUBIC))
+        output_array.append(cv2.resize(input_array[:, :, i], (64, 64), interpolation=cv2.INTER_CUBIC))
     output_array = np.array(output_array, dtype='float32')
     output_array = output_array.transpose((1, 2, 0))
     return output_array
