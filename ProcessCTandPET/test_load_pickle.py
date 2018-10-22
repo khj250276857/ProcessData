@@ -1,15 +1,14 @@
-import pickle
+import pickle as pkl
 import matplotlib.pyplot as plt
+import numpy as np
 
-with open(r'E:\实验数据\shift_10_10.pkl', 'rb') as f:
-    ct_arrs = pickle.load(f)
+with open(r'E:\training data\3D volume suv0-5(resize_128+128)\ct volume\00005.pkl', 'rb') as f:
+    ct_arrs = pkl.load(f)
+ct_arrs = ct_arrs.reshape(128, 128, 64)
+ct_arrs = ct_arrs.transpose([2, 0, 1])
 
-print(type(ct_arrs))
-resized_ct_arrs = ct_arrs[0]
-shift_ct_arrs = ct_arrs[1]
 
-plt.figure('before')
-plt.imshow(resized_ct_arrs[100], cmap='gray')
-plt.figure('after')
-plt.imshow(shift_ct_arrs[100], cmap='gray')
+plt.figure('ct_slice')
+plt.imshow(ct_arrs[:, 64, :], cmap='gray')
+
 plt.show()
