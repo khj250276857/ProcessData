@@ -94,8 +94,8 @@ def main():
     workspace = r'E:\实验数据\2018_05_14_脱敏后PETCT 91例'
     file_paths = [os.path.join(workspace, _) for _ in os.listdir(workspace)]
 
-    ct_save_path = r'E:\training data\3D volume suv0-5(resize_64+64)\ct volume'
-    pt_save_path = r'E:\training data\3D volume suv0-5(resize_64+64)\pt volume'
+    ct_save_path = r'E:\training data\3D volume suv0-5(resize_128+128)\ct volume'
+    pt_save_path = r'E:\training data\3D volume suv0-5(resize_128+128)\pt volume'
     if not os.path.exists(ct_save_path):
         os.mkdir(ct_save_path)
     if not os.path.exists(pt_save_path):
@@ -103,8 +103,8 @@ def main():
 
     start_num = 0
     pixel_spacing = 32
-    patch_size_h = 64
-    patch_size_w = 64
+    patch_size_h = 128
+    patch_size_w = 128
     patch_size_d = 64
     file_num = len(file_paths)
     for i in range(file_num):
