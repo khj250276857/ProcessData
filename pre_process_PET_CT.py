@@ -121,7 +121,8 @@ def cal_suv(case_path0, lbm=False):
     # ArrayDicom = normalize(ArrayDicom)
     ArrayDicom = np.clip(ArrayDicom, 0, 5)
     ArrayDicom = ArrayDicom.reshape(1, ArrayDicom.shape[0], ArrayDicom.shape[1], ArrayDicom.shape[2], 1)
-
+    ArrayDicom = ArrayDicom[:, :, :, 1:, :]
+    ArrayDicom = ArrayDicom[:, :, :, :-1, :]
     return ArrayDicom
 
 # In[9]:
@@ -162,6 +163,8 @@ def cal_hu(case_path1):
         ArrayDicom_ct[:, :, i] = slopes[i + 1]*ds_ct.pixel_array+intercept[i + 1]
     ArrayDicom_ct = np.clip(resize(ArrayDicom_ct), -90, 300)
     ArrayDicom_ct = ArrayDicom_ct.reshape(1, ArrayDicom_ct.shape[0], ArrayDicom_ct.shape[1], ArrayDicom_ct.shape[2], 1)
+    ArrayDicom_ct = ArrayDicom_ct[:, :, :, 1:, :]
+    ArrayDicom_ct = ArrayDicom_ct[:, :, :, :-1, :]
 
     return ArrayDicom_ct
 # In[14]:
