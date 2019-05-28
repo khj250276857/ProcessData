@@ -91,17 +91,17 @@ def getPTarrayFromFile(file_path):
 
 
 def main():
-    workspace = r'E:\实验数据\2018_05_14_脱敏后PETCT 91例'
+    workspace = r'E:\实验数据\2018_11_10_淋巴瘤176例'
     file_paths = [os.path.join(workspace, _) for _ in os.listdir(workspace)]
 
-    ct_save_path = r'E:\training data\3D volume suv0-5(resize_128+128)\ct volume'
-    pt_save_path = r'E:\training data\3D volume suv0-5(resize_128+128)\pt volume'
+    ct_save_path = r'E:\training data\176patient(128+128+64)\ct_volume'
+    pt_save_path = r'E:\training data\176patient(128+128+64)\pt_volume'
     if not os.path.exists(ct_save_path):
         os.mkdir(ct_save_path)
     if not os.path.exists(pt_save_path):
         os.mkdir(pt_save_path)
 
-    start_num = 0
+    start_num = 1
     pixel_spacing = 32
     patch_size_h = 128
     patch_size_w = 128
